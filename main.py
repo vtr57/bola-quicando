@@ -1,6 +1,6 @@
 import quedalivre
 
-corpo = quedalivre.Particula(v0=25, g=10, k_p=0.15, n=50)
+corpo = quedalivre.Particula(v0=10, g=9.8, k_p=0.3, n=100)
 corpo.tempo()
 corpo.velocidade()
 corpo.posicao()
