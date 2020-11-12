@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Particula:
-    def __init__(self, v0, g, k_p, n=20):
+    def __init__(self, v0, g, k_p, n=20, cd = 16):
         self.velocidadeInicial = v0
         self.aceleracao = g
         self.coeficientePerda = k_p
         self.perdaVelocidade = np.multiply(self.coeficientePerda, self.velocidadeInicial)
         self.quiques = np.divide(1, self.coeficientePerda)
         self.n = n
-        self.casasDecimais = 4
+        self.casasDecimais = cd
         self.dt = round(np.divide(np.multiply(2, self.velocidadeInicial), np.multiply(self.n, self.aceleracao)), self.casasDecimais)
 
     def tempo(self):
@@ -53,14 +53,20 @@ class Particula:
             t0 = a
             self.cronometro = np.append(self.cronometro, m)
 
-    def grafico(self):
-        fig, ax = plt.subplots()
+    def executando_grafico(self):
+        fig, self.ax = plt.subplots()
         try:
-            ax.plot(self.cronometro, self.pos)
+            self.grafico()
         except:
             amais = len(self.cronometro) - len(self.pos)
             self.cronometro = np.delete(self.cronometro, np.s_[:amais])
-            ax.plot(self.cronometro, self.pos)
+            self.grafico()
         plt.savefig('Lançamento Vertical.png')
         plt.show()
 
+    def grafico(self):
+        self.ax.scatter(self.cronometro, self.pos, s=1, c='r')
+        self.ax.set_title('Partícula quicando')
+        self.ax.set_xlabel("cronômetro (s)")
+        self.ax.set_ylabel("posição (m)")
+        self.ax.grid(True)
